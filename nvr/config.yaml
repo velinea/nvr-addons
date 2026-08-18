@@ -1,0 +1,34 @@
+name: NVR Stream
+version: "1.0.0"
+slug: nvr-stream
+description: Streams cameras from NVR to Home Assistant via go2rtc
+url: https://github.com/user/nvr-addons
+arch:
+  - amd64
+  - aarch64
+init: false
+startup: application
+host_network: false
+ports:
+  "1984/tcp": 1984
+  "8554/tcp": 8554
+ports_description:
+  "1984/tcp": go2rtc Web UI
+  "8554/tcp": go2rtc RTSP
+map:
+  - type: config
+    read_only: true
+options:
+  nvr_host: "192.168.1.250"
+  nvr_port: 80
+  nvr_user: "admin"
+  nvr_pass: ""
+  channels: "0,1,2,3"
+  streams: "main,sub"
+schema:
+  nvr_host: str
+  nvr_port: int
+  nvr_user: str
+  nvr_pass: str
+  channels: str
+  streams: str
