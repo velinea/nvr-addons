@@ -89,6 +89,32 @@ show_state: false
 show_name: false
 ```
 
+## Browser playback
+
+go2rtc serves streams in multiple browser-friendly formats. Replace `<HA_IP>` with your Home Assistant IP.
+
+### go2rtc Web UI (easiest)
+
+Open `http://<HA_IP>:1984` — select a stream from the dropdown and play it directly. You can bookmark this page for quick access.
+
+### MSE (low latency, Chrome/Edge)
+
+```
+http://<HA_IP>:1984/stream.html?src=cam0_sub
+```
+
+### HLS (Safari, iOS)
+
+```
+http://<HA_IP>:1984/api/stream.m3u8?src=cam0_sub
+```
+
+### WebRTC (lowest latency)
+
+```
+http://<HA_IP>:1984/webrtc.html?src=cam0_sub
+```
+
 ## Standalone usage
 
 `connect.py` can also be used outside Home Assistant.
