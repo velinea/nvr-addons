@@ -304,7 +304,7 @@ if __name__ == "__main__":
     args = parse_args()
 
     if args.go2rtc:
-        cmd = f"python3 /config/connect.py -c {args.channel} -s {args.stream}"
+        cmd = f"python3 /app/connect.py -c {args.channel} -s {args.stream}"
         if args.nvr_host:
             cmd += f" --nvr-host {args.nvr_host}"
         if args.nvr_port:

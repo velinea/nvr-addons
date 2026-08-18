@@ -14,7 +14,7 @@ COPY patches/ /tmp/patches/
 RUN PKG=$(find /usr/lib -maxdepth 2 -name "librtmp" -type d | head -1) && \
     patch -d "$PKG" -p1 < /tmp/patches/librtmp_result_handler.patch
 
-COPY connect.py /config/connect.py
+COPY connect.py /app/connect.py
 
 RUN ARCH=$(uname -m) && \
     if [ "$ARCH" = "x86_64" ]; then ARCH="amd64"; fi && \

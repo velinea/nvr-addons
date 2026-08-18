@@ -15,9 +15,6 @@ ports:
 ports_description:
   "1984/tcp": go2rtc Web UI
   "8554/tcp": go2rtc RTSP
-map:
-  - type: config
-    read_only: true
 options:
   nvr_host: "192.168.1.250"
   nvr_port: 80
