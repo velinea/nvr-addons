@@ -22,7 +22,7 @@ for ch in "${CH_LIST[@]}"; do
   for st in "${ST_LIST[@]}"; do
     st=$(echo $st | tr -d ' ')
     NAME="cam${ch}_${st}"
-    CMD="python3 /app/connect.py -c ${ch} -s ${st}"
+    CMD="python3 /app/connect.py --flv -c ${ch} -s ${st}"
     CMD="${CMD} --nvr-host ${NVR_HOST}"
     CMD="${CMD} --nvr-port ${NVR_PORT}"
     CMD="${CMD} --nvr-user ${NVR_USER}"

@@ -97,6 +97,15 @@ def avc_to_annexb(body):
     return b""
 
 
+def flv_tag(pkt_type, timestamp, body):
+    data_size = len(body)
+    ts = timestamp & 0xFFFFFF
+    ts_ext = (timestamp >> 24) & 0xFF
+    tag = bytes([pkt_type]) + data_size.to_bytes(3, "big") + \
+          ts.to_bytes(3, "big") + bytes([ts_ext]) + b"\x00\x00\x00"
+    return tag + body + struct.pack(">I", data_size + 11)
+
+
 def write_flv(data):
     global flv_header_written, output
     if not flv_header_written:
