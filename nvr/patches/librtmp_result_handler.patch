@@ -1,5 +1,5 @@
---- a/librtmp/rtmp.py
-+++ b/librtmp/rtmp.py
+--- a/rtmp.py
++++ b/rtmp.py
 @@ -346,6 +346,10 @@
                      else:
                          result = None
