@@ -3,7 +3,8 @@ FROM ${BUILD_FROM}
 
 ARG GO2RTC_VERSION=1.9.14
 
-RUN apk add --no-cache python3 py3-pip curl
+RUN apk add --no-cache python3 py3-pip curl \
+    gcc musl-dev python3-dev librtmp-dev
 
 COPY requirements.txt /tmp/
 RUN pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
