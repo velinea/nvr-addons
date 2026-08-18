@@ -7,7 +7,8 @@ RUN apk add --no-cache python3 py3-pip curl \
     gcc musl-dev python3-dev rtmpdump-dev
 
 COPY requirements.txt /tmp/
-RUN pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
+RUN CFLAGS="-Wno-error=incompatible-pointer-types" \
+    pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
 
 COPY connect.py /config/connect.py
 
