@@ -11,7 +11,7 @@ RUN CFLAGS="-Wno-error=incompatible-pointer-types" \
     pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
 
 COPY patches/ /tmp/patches/
-RUN PKG=$(find /usr/lib -maxdepth 2 -name "librtmp" -type d | head -1) && \
+RUN PKG=$(python3 -c "import librtmp, os; print(os.path.dirname(librtmp.__file__))") && \
     patch -d "$PKG" -p1 < /tmp/patches/librtmp_result_handler.patch
 
 COPY connect.py /app/connect.py
