@@ -10,6 +10,10 @@ COPY requirements.txt /tmp/
 RUN CFLAGS="-Wno-error=incompatible-pointer-types" \
     pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
 
+COPY patches/ /tmp/patches/
+RUN PKG=$(find /usr/lib -maxdepth 2 -name "librtmp" -type d | head -1) && \
+    patch -d "$PKG" -p1 < /tmp/patches/librtmp_result_handler.patch
+
 COPY connect.py /config/connect.py
 
 RUN ARCH=$(uname -m) && \

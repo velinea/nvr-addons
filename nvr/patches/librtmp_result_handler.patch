@@ -1,0 +1,13 @@
+--- a/librtmp/rtmp.py
++++ b/librtmp/rtmp.py
+@@ -346,6 +346,10 @@
+                     else:
+                         result = None
+
+                     self._invoke_results[transaction_id_] = result
++                    handler = self._invoke_handlers.get("_result")
++                    if handler:
++                        handler(result)
++
+                 else:
+                     handler = self._invoke_handlers.get(method)
