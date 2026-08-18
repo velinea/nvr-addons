@@ -1,5 +1,5 @@
 name: NVR Stream
-version: "1.0.5"
+version: "1.0.6"
 slug: nvr-stream
 description: Streams cameras from NVR to Home Assistant via go2rtc
 url: https://github.com/user/nvr-addons

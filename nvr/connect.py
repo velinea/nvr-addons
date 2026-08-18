@@ -30,7 +30,7 @@ flv_header_written = False
 output = None
 clients = []
 clients_lock = threading.Lock()
-h264_mode = False
+h264_mode = True
 stream_name = "ch0_1.264"
 
 
@@ -95,6 +95,21 @@ def avc_to_annexb(body):
             off += nalu_len
         return b"".join(out)
     return b""
+
+
+def write_raw(data):
+    if output:
+        output.write(data)
+        output.flush()
+    with clients_lock:
+        dead = []
+        for c in clients:
+            try:
+                c.write(data)
+            except Exception:
+                dead.append(c)
+        for c in dead:
+            clients.remove(c)
 
 
 def flv_tag(pkt_type, timestamp, body):
@@ -190,9 +205,10 @@ def on_result(*args):
                 if len(body) >= 2 and (body[0] & 0x0F) == 7:
                     annex = avc_to_annexb(body)
                     if annex:
-                        write_flv(annex)
+                        write_raw(annex)
             else:
-                tag = flv_tag(packet.type, packet.timestamp, bytes(packet.body))
+                flv_type = 9 if packet.type == PACKET_TYPE_VIDEO else 8
+                tag = flv_tag(flv_type, packet.timestamp, bytes(packet.body))
                 write_flv(tag)
         else:
             try:
