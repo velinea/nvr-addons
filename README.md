@@ -115,6 +115,37 @@ http://<HA_IP>:1984/api/stream.m3u8?src=cam0_sub
 http://<HA_IP>:1984/webrtc.html?src=cam0_sub
 ```
 
+## External access (Cloudflare tunnel)
+
+If you access HA from outside your home network via a Cloudflare tunnel, you can expose go2rtc on a separate subdomain.
+
+### Tunnel configuration
+
+Add go2rtc as a route in your `config.yml` (usually `~/.cloudflared/config.yml`):
+
+```yaml
+ingress:
+  - hostname: ha.mannikko.cc
+    service: http://localhost:8123
+  - hostname: go2rtc.mannikko.cc
+    service: http://localhost:1984
+  - service: http_status:404
+```
+
+Then restart cloudflared: `sudo systemctl restart cloudflared`
+
+### What works through Cloudflare
+
+| Protocol | Works? | URL |
+|---|---|---|
+| go2rtc Web UI | Yes | `https://go2rtc.mannikko.cc` |
+| HLS | Yes | `https://go2rtc.mannikko.cc/api/stream.m3u8?src=cam0_sub` |
+| MSE | Maybe | Depends on WebSocket support in your Cloudflare plan |
+| WebRTC | No | Requires UDP — Cloudflare tunnels are HTTP-only |
+| RTSP | No | Non-HTTP protocol |
+
+The Web UI at `https://go2rtc.mannikko.cc` lets you select and play any stream directly in the browser from anywhere.
+
 ## Standalone usage
 
 `connect.py` can also be used outside Home Assistant.
